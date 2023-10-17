@@ -1,20 +1,22 @@
 <script setup>
 import { ref } from 'vue'
+import { useUserStore } from '../stores/user';
 
 defineProps({
   msg: String,
 })
-
-const count = ref(0)
+const user = useUserStore()
+user.currentUser = { name: 'John Doe' }
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="user.count++">count is {{ user.count }}</button>
     <p>
-      Edit
+      Pini current count is {{ user.count }}
+      currentUser: {{ user.currentUser }}
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
   </div>
