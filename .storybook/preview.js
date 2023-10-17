@@ -21,6 +21,7 @@ setup((app) => {
 
 
     app.use(pinia);
+    app.use(head);
 });
 
 export default preview;
