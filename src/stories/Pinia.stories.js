@@ -1,33 +1,34 @@
 import { useUserStore } from '../stores/user';
-import PricingView from '../components/HelloWorld.vue';
+import PricingView from '../components/PricingView.vue';
 
 export default {
     title: 'Views/Pricing',
+    component: PricingView,
+    argTypes: {
+        backgroundColor: { control: 'color' },
+    }
 };
 
-const Template = (args) => ({
-    components: { PricingView },
-    setup() { return { args }; },
-    template: '<pricing-view v-bind="args" />',
-});
-
-export const Pricing = Template.bind({});
-export const DarkTheme = Template.bind({});
-
-DarkTheme.parameters = { theme: 'dark' };
-Pricing.loaders = [
-    async() => {
-        const userStore = useUserStore();
-
-        userStore.currentUser = {};
+export const Pricing = {
+    args: {
+        user: {
+            name: 'John Doe',
+            email: 'javavh@gmail.com'
+        }
     },
-];
 
-DarkTheme.parameters = { theme: 'dark' };
-DarkTheme.loaders = [
-    async() => {
-        const userStore = useUserStore();
+    render: () => ({
+        components: { PricingView },
+        setup() {
+            const user = useUserStore();
+            user.name = 'Joe DaeK';
+            user.email = 'java@gmail.om';
+            user.count = 2
 
-        userStore.currentUser = {};
-    },
-];
+            const { name, email, count } = user;
+            return { user: { name, email, count } };
+        },
+        template: '<pricing-view :user="user" />',
+    })
+
+};

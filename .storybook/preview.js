@@ -2,6 +2,7 @@
 import { setup } from '@storybook/vue3';
 import { createHead } from '@unhead/vue';
 import { createPinia } from 'pinia';
+const globalWindow = window;
 const preview = {
     parameters: {
         actions: { argTypesRegex: "^on[A-Z].*" },
@@ -17,11 +18,13 @@ const preview = {
 const pinia = createPinia();
 const head = createHead();
 
-setup((app) => {
+const globalPlugin = async(vueApp, storyContext) => {
+    console.log('globalPlugin');
+    await vueApp.use(pinia);
+    await vueApp.use(head);
+};
 
-
-    app.use(pinia);
-    app.use(head);
-});
+globalWindow.PLUGINS_SETUP_FUNCTIONS = new Set();
+globalWindow.PLUGINS_SETUP_FUNCTIONS.add(globalPlugin);
 
 export default preview;
